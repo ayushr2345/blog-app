@@ -1,0 +1,56 @@
+.container-image {
+    position: absolute;
+    display: inline-block;
+    width: 25%;
+    height: auto;
+    margin-top: 5%;
+    right: 60%;
+}
+
+@media only screen and (max-width: 720px) and (min-width: 480px) {
+    .img-fluid {
+        width: 100%;
+        height: auto;
+    }
+    .container-image {
+        width: 30%;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .img-fluid {
+        width: 100%;
+        height: auto;
+    }
+    .container-image {
+        width: 30%;
+        margin: auto;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .vertical-line {
+        display: inline-block;
+        margin-top: 5%;
+        min-height: 500px;
+        width: 1px;
+        background-color: rgb(15, 13, 13);
+    }
+}
+
+.buttons-home {
+    display: inline-block;
+    position: absolute;
+    margin-left: 15%;
+    margin-top: 15%;
+    width: 25%;
+}
+
+.login-button {
+    margin-right: 1%;
+}
+
+.signup-button {
+    margin-left: 1%;
+}
