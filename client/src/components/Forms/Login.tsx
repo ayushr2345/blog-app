@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import Image from "react-bootstrap/Image";
+import "./Form.css";
 import { Button, Form } from "react-bootstrap";
+import Pitch from "../Home/Pitch";
 
 function Login() {
   function handleSubmit() {}
@@ -9,25 +12,35 @@ function Login() {
     return true;
   }
   return (
-    <div className="Login">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <div>
+      <div className="container-image">
+        <Image
+          src={process.env.PUBLIC_URL + "image.png"}
+          roundedCircle
+          className="img-fluid"
+        />
+      </div>
+      <div className="pitch-text">
+        Welcome back <br />
+        ⊂(◉‿◉)つ
+      </div>
+      <div className="vertical-line"></div>
+      <Form className="login">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Control type="email" placeholder="Enter email" />
         </Form.Group>
-        <Form.Group size="lg" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Control type="password" placeholder="Password" />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
-          Login
+
+        <Button
+          className="login-button"
+          variant="primary"
+          type="submit"
+          size="lg"
+        >
+          Log In
         </Button>
       </Form>
     </div>

@@ -1,0 +1,29 @@
+
+.login, .signup {
+    width: 50%;
+    margin-top: 7.5%;
+    left: 62.5%;
+    top: 40%;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 30%;
+}
+
+.signup {
+    margin-top: 3.5%;
+}
+
+@media only screen and (min-width: 1280px) {
+    .login, .signup {
+        width: 25%;
+        margin-top: 7.5%;
+        display: inline-block;
+        position: absolute;
+        left: 62.5%;
+        top: 40%;
+    }
+
+    .signup {
+        margin-top: 3.5%;
+    }
+}
