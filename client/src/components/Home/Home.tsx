@@ -1,11 +1,20 @@
-import React from "react";
-import Header from "../Navbar/Header";
+import React, { useState } from "react";
+import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Image from 'react-bootstrap/Image'
-import './Home.css';
+import Image from "react-bootstrap/Image";
+import GoogleButton from "react-google-button";
+import "./Home.css";
 import { Button } from "react-bootstrap";
+import Pitch from "./Pitch";
+import Login from "../Forms/Login";
 
 function Home() {
+  const [click, setClick] = useState<boolean>(false);
+  function handleClick(event: any) {
+    setClick(true);
+    console.log(event);
+  }
+
   return (
     <div>
       <Header />
@@ -16,14 +25,33 @@ function Home() {
           className="img-fluid"
         />
       </div>
+
       <div className="vertical-line"></div>
+
+      {!click ? <Pitch /> : <Login />}
+
       <div className="buttons-home">
-        <Button className="login-button" variant="primary" size="lg">Log In</Button>
-        <Button className="signup-button" variant="outline-dark" size="lg">Sign Up</Button>
+        <Button
+          className="login-button"
+          variant="primary"
+          size="lg"
+          onClick={handleClick}
+        >
+          Log In
+        </Button>
+        <Button
+          className="signup-button"
+          variant="outline-dark"
+          size="lg"
+          onClick={handleClick}
+        >
+          Sign Up
+        </Button>
+        <GoogleButton className="google-login-button" />
       </div>
       <Footer />
     </div>
   );
-};
+}
 
 export default Home;
