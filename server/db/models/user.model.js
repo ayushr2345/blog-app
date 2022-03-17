@@ -3,5 +3,8 @@ require('mongoose-type-email');
 
 const userSchema = new mongoose.Schema({
     name: String,
-    email: mongoose.SchemaTypes.email,
-})
+    email: String,
+    dob: Date,
+});
+
+module.exports = mongoose.model('User', userSchema);
