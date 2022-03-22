@@ -1,3 +1,6 @@
+.main-container{
+}
+
 .container-image {
     width: 70%;
     height: auto;
@@ -38,6 +41,9 @@
 }
 
 @media only screen and (min-width: 1280px) {
+    .main-container{
+        height: 7vh;
+    }
     .container-image {
         position: absolute;
         display: inline-block;

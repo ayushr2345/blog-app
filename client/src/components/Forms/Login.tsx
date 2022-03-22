@@ -1,37 +1,84 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Image from "react-bootstrap/Image";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import validator from "validator";
+import { Alert } from "@mui/material";
+import { logInUser } from "../../services/userService";
 
 interface ICredentials {
   email: string;
   password: string;
 }
 
-function Login() {
+type Props = {
+  isAuth: boolean;
+  setIsAuth: (value: boolean) => void;
+};
+
+const Login: FC<Props> = (props: Props) => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState<Partial<ICredentials>>({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const [emailFocus, setEmailFocus] = useState<boolean>(false);
+  const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
 
-    console.log(credentials);
+  const validateEmail = () => {
+    if (credentials.email && validator.isEmail(credentials.email)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const validatePassword = () => {
+    if (
+      credentials.password &&
+      validator.isStrongPassword(credentials.password, {
+        minLength: 6,
+        minLowercase: 0,
+        minUppercase: 0,
+        minNumbers: 0,
+        minSymbols: 0,
+      })
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const validateForm = () => {
     // will return false if both present and return true if any one or zero present
     // and set it to the disable which accepts a boolean
-    if (
-      credentials.email &&
-      credentials.password &&
-      validator.isEmail(credentials.email)
-    ) {
-      return false;
-    } else {
+    if (validatePassword() && validateEmail()) {
       return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //console.log(credentials);
+
+    // CHECK IF USER EXISTS, THEN LOGIN AND SHOW DASHBOARD
+    if (validateForm()) {
+      const authenticated = await logInUser(credentials);
+      console.log(authenticated);
+      if (authenticated) {
+        props.setIsAuth(true);
+        navigate("/auth/dashboard");
+      } else {
+        navigate("/login");
+      }
+    } else {
+      navigate("/");
     }
   };
 
@@ -57,14 +104,22 @@ function Login() {
             name="email"
             type="email"
             placeholder="Enter email"
-            onChange={event => {
+            onChange={(event) => {
               const email: string = event.currentTarget.value;
               setCredentials({
                 ...credentials,
-                email: email
+                email: email,
               });
             }}
+            onFocus={() => {
+              setEmailFocus(true);
+            }}
           />
+          {!validateEmail() && emailFocus && credentials.email && (
+            <Alert className="alert" severity="error">
+              Please enter a valid email
+            </Alert>
+          )}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -72,18 +127,26 @@ function Login() {
             required
             type="password"
             placeholder="Password"
-            onChange={event => {
+            onChange={(event) => {
               const password: string = event.currentTarget.value;
               setCredentials({
                 ...credentials,
-                password: password
+                password: password,
               });
             }}
+            onFocus={() => {
+              setPasswordFocus(true);
+            }}
           />
+          {!validatePassword() && passwordFocus && credentials.password && (
+            <Alert className="alert" severity="error">
+              Password should be atleast 6 characters long
+            </Alert>
+          )}
         </Form.Group>
 
         <Button
-          disabled={validateForm()}
+          disabled={!validateForm()}
           className="login-button"
           variant="primary"
           type="submit"
@@ -95,6 +158,6 @@ function Login() {
       </Form>
     </div>
   );
-}
+};
 
 export default Login;

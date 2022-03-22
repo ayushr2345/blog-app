@@ -4,12 +4,11 @@ import GoogleButton from "react-google-button";
 import "./Home.css";
 import { Button } from "react-bootstrap";
 import Pitch from "./Pitch";
-import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
 function Home() {
   return (
-    <div>
+    <div className="main-container">
       <div className="container-image">
         <Image
           src={process.env.PUBLIC_URL + "image.png"}

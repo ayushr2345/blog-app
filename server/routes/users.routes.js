@@ -1,104 +1,45 @@
-const express = require("express");
-const router = express.Router();
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require("../db/models/user.model");
+const express = require('express');
+const User = require('../db/models/user.model');
+const userRouter = express.Router();
+const passportLocal = require('../auth/local');
+const { generatePassword } = require('../auth/pwUtils');
 
 /*
-    GET ALL USERS
+---------- CREATE A USER ----------
 */
-router.get('/users', (req, res) => {
-    User.find({}, (err, users) => {
-        if (err) {
-            res.json({reply: "unsuccessful"});
-            return console.error(err);
-        } else {
-            res.json({users});
-        }
-    });
-});
-
-/*
-    GET ONE USER
-*/
-router.get('/users/:id', (req, res) => {
-    const userId = req.params.id;
-    User.findById({_id: userId}, (err, user) => {
-        if (err) {
-            res.json({error: err.kind});
-            return console.error(err);
-        } else {
-            if (user) {
-                res.json({user});
-            } else {
-                res.json({message: "User does not exist"});
-            }            
-        }
-    });
-});
-
-/*
-    ADD ONE USER
-*/
-router.post('/users/new', (req, res) => {
-    const newUser = new User (req.body);
-    newUser.save().then((savedUser) => {
-        res.json({
-            user: savedUser,
-            message: "User saved",
-            success: true
+userRouter.post('/signup', async (req, res) => {
+    const { salt, hash } = generatePassword(req.body.password);
+    
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+        return res.status(400).json({
+            message: "User already exists !"
         });
-    });
+    } else {
+        const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            salt: salt,
+            hash: hash,
+        });
+        
+        newUser.save()
+            .then((user) => {
+                return res.status(200).json({
+                    user: user
+                });
+            });
+    }
 });
 
 /*
-    DELETE ONE USER
+---------- LOGIN A USER ----------
 */
-router.delete('/users/delete/:id', (req, res) => {
-    const userId = req.params.id;
-    User.findByIdAndDelete({_id: userId}, (err, deletedUser) => {
-        if (err) {
-            res.json({error: err.kind});
-            return console.error(err);
-        } else {
-            if (deletedUser) {
-                return res.status(200).json({
-                    user: deletedUser,
-                    message: "deleted"
-                });
-            } else {
-                return res.status(404).json({
-                    message: "User Not found"
-                });
-            }
-        }
+
+userRouter.post('/login', passportLocal.authenticate('local'), (req, res) => {
+    return res.status(200).json({
+        message: "logged in"
     });
 });
 
-/*
-    UPDATE ONE USER
-*/
-router.put('/users/update/:id', (req, res) => {
-    // using {new: true} so that the findByIdAndUpdate returns the updated User
-    const userId = req.params.id;
-    const updatedUser = req.body;
-    User.findByIdAndUpdate({_id: userId}, updatedUser, {new: true}, (err, updatedUser) => {
-        if (err) {
-            res.json({error: err.kind});
-            return console.error(err);
-        } else {
-            if (updatedUser) {
-                return res.status(200).json({
-                    user: updatedUser,
-                    message: "updated"
-                });
-            } else {
-                return res.status(404).json({
-                    message: "User Not found"
-                });
-            }
-        }
-    });
-});
-
-module.exports = router;
+module.exports = userRouter;

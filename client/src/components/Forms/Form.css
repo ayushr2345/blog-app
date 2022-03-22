@@ -10,7 +10,11 @@
 }
 
 .signup {
-    margin-top: 3.5%;
+    margin-top: 5%;
+}
+
+.alert {
+    margin-top: 2%;
 }
 
 @media only screen and (min-width: 1280px) {
@@ -24,6 +28,10 @@
     }
 
     .signup {
-        margin-top: 3.5%;
+        margin-top: 5%;
+    }
+
+    .alert {
+        margin-top: 2%;
     }
 }
