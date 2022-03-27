@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Navigate,
-  Outlet,
-  useOutlet,
-  useOutletContext,
-} from "react-router-dom";
-import IUser from "../../interfaces/User.interface";
+import { Navigate, Outlet } from "react-router-dom";
 import { MatchAUserSession } from "../../services/userService";
 
-function ProtectedRoutes() {
-  const [user, setUser] = useState<Partial<IUser>>({
-    name: "",
-    email: "",
-    dob: "",
-  });
+function ProtectedLoginRoutes() {
   const [isLoading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
@@ -25,9 +14,6 @@ function ProtectedRoutes() {
       } else {
         setIsLoggedIn(true);
         setLoading(false);
-        //console.log(user);
-        setUser(res.user);
-        //console.log(user);
       }
     });
   }, []);
@@ -35,12 +21,12 @@ function ProtectedRoutes() {
   if (isLoading) {
     return <>Loading</>;
   } else {
-    if (isLoggedIn) {
-      return <Outlet context={{ user }} />;
+    if (!isLoggedIn) {
+      return <Outlet />;
     } else {
-      return <Navigate to="/login" />;
+      return <Navigate to="/auth/dashboard" />;
     }
   }
 }
 
-export default ProtectedRoutes;
+export default ProtectedLoginRoutes;

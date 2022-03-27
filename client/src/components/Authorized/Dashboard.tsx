@@ -1,11 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import BlogCard from "./Card";
 import IBlog from "../../interfaces/Blog.interface";
 import DUMMY_BLOGS from "../DUMMY_BLOGS";
 import { Button, Form } from "react-bootstrap";
 import { logOutUser } from "../../services/userService";
-import { useNavigate } from "react-router-dom";
-import DUMMY_USER from "../DUMMY_USER";
+import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import IUser from "../../interfaces/User.interface";
 
 type Blog = {
@@ -13,13 +12,19 @@ type Blog = {
   article: string;
 };
 
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-};
+//const Dashboard: FC<Partial<IUser>> = (user: Partial<IUser>) => {
+function Dashboard() {
+  const [user, setUser] = useState<Partial<IUser>>({
+    name: "",
+    email: "",
+  });
+  const newUser = useOutletContext<{ user: Partial<IUser> }>().user;
 
-const Dashboard = () => {
+  useEffect(() => {
+    if (newUser) {
+      setUser(newUser);
+    }
+  }, [user]);
   const navigate = useNavigate();
   const [blog, setBlog] = useState<Blog>({
     title: "",
@@ -42,9 +47,9 @@ const Dashboard = () => {
 
       {/* PROFILE */}
       <div className="user">
-        <div className="user-name">{DUMMY_USER.name}</div>
+        <div className="user-name">{user.name}</div>
         <br />
-        <div className="user-email">{DUMMY_USER.email}</div>
+        <div className="user-email">{user.email}</div>
         <br />
 
         {/* Create a Blog */}
@@ -106,8 +111,9 @@ const Dashboard = () => {
           Log Out
         </Button>
       </div>
+      <Outlet />
     </div>
   );
-};
+}
 
 export default Dashboard;
