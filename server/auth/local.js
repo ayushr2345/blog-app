@@ -21,16 +21,15 @@ passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, don
 }));
 
 passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
+    done(null, user.id);
+});
 
-    passport.deserializeUser((userId, done) => {
-        User.findById(userId)
-            .then((user) => {
-                done(null, user);
-            })
-            .catch(err => done(err))
-    });
-//init();
+passport.deserializeUser((userId, done) => {
+    User.findById(userId)
+        .then((user) => {
+            done(null, user);
+        })
+        .catch(err => done(err))
+});
 
 module.exports = passport;

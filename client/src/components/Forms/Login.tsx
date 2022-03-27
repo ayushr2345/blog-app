@@ -6,18 +6,14 @@ import { Button, Form } from "react-bootstrap";
 import validator from "validator";
 import { Alert } from "@mui/material";
 import { logInUser } from "../../services/userService";
+import { request } from "http";
 
 interface ICredentials {
   email: string;
   password: string;
 }
 
-type Props = {
-  isAuth: boolean;
-  setIsAuth: (value: boolean) => void;
-};
-
-const Login: FC<Props> = (props: Props) => {
+function Login() {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState<Partial<ICredentials>>({
     email: "",
@@ -65,14 +61,12 @@ const Login: FC<Props> = (props: Props) => {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    //console.log(credentials);
-
     // CHECK IF USER EXISTS, THEN LOGIN AND SHOW DASHBOARD
     if (validateForm()) {
       const authenticated = await logInUser(credentials);
       console.log(authenticated);
+
       if (authenticated) {
-        props.setIsAuth(true);
         navigate("/auth/dashboard");
       } else {
         navigate("/login");
@@ -158,6 +152,6 @@ const Login: FC<Props> = (props: Props) => {
       </Form>
     </div>
   );
-};
+}
 
 export default Login;

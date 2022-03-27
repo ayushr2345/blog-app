@@ -1,26 +1,16 @@
 const passport = require('passport');
 
 module.exports = () => {
-    // passport.serializeUser((user, done) => {
-    //     done(null, user.id);
-    // });
+// used to serialize the user for the session
+passport.serializeUser(function(user, done) {
+    done(null, user.id); 
+   // where is this user.id going? Are we supposed to access this anywhere?
+});
 
-    // passport.deserializeUser((userId, done) => {
-    //     User.findById(userId)
-    //         .then((user) => {
-    //             done(null, user);
-    //         })
-    //         .catch(err => done(err))
-    // });
-    passport.serializeUser(function(user, cb) {
-        process.nextTick(function() {
-        cb(null, { id: user.id, email: user.email });
-        });
+// used to deserialize the user
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
     });
-    
-    passport.deserializeUser(function(user, cb) {
-        process.nextTick(function() {
-        return cb(null, user);
-        });
-    });
+});
 }

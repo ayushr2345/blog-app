@@ -77,12 +77,12 @@ function Signup() {
 
     if (validateForm()) {
       const authenticated = await addUser(credentials);
-      console.log(authenticated);
-      // if (authenticated) {
-      //   navigate("/auth/dashboard");
-      // } else {
-      //   navigate("/signup");
-      // }
+      //console.log(authenticated);
+      if (authenticated) {
+        navigate("/auth/dashboard");
+      } else {
+        navigate("/signup");
+      }
     } else {
       navigate("/");
     }

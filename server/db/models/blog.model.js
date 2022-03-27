@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    authodId: mongoose.Schema.ObjectId
+    authorId: mongoose.Schema.ObjectId
 });
 
 module.exports.blogSchema = blogSchema;

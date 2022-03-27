@@ -33,4 +33,41 @@
         margin-top: 3%;
         margin-left: 16%
     }
+    .blog {
+        display: inline-block;
+        position: absolute;
+    }
+    .user {
+        display: inline-block;
+        position: absolute;
+        top: 17%;
+        right: 3.5%;
+        border: 1px solid rgba(167, 165, 165, 0.76);
+        padding: 1rem;
+        margin: 1rem;
+        width: 15%;
+    }
+    .user-name {
+        margin: 1rem;
+        margin-bottom: -20px;
+        font-weight: 600;
+        font-size: x-large;
+        font-variant: small-caps;
+    }
+    .user-email {
+        font-weight: 500;
+        font-size: medium;
+        color: rgb(88, 88, 88);
+    }
+    .heading {
+        font-size: larger;
+        font-style: italic;
+    }
+    .form {
+        margin-top: 10%;
+        margin-bottom: 30%;
+    }
+    .button-form {
+        width: 60%;
+    }
 }
