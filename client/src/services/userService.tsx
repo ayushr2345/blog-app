@@ -1,7 +1,12 @@
 import axios from "axios";
+import IBlog from "../interfaces/Blog.interface";
 import IUser from "../interfaces/User.interface";
 const USERS_API_URL = "http://localhost:5000";
 axios.defaults.withCredentials = true;
+
+/*
+ ********** USERS **********
+ */
 
 // SIGNUP
 export const addUser = async (newUser: Partial<IUser>) => {
@@ -57,5 +62,48 @@ export const MatchAUserSession = async () => {
   } catch (err) {
     console.log(USERS_API_URL);
     console.error(err);
+  }
+};
+
+// GET A USER TO DISPLAY IN THE BLOG CARD
+export const GetUser = async (blog: Partial<IBlog>) => {
+  try {
+    const response = await axios.post(USERS_API_URL + "/auth/get-name", blog, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+/*
+ ********** BLOGS **********
+ */
+
+// ADD A BLOG
+export const AddBlog = async (blog: Partial<IBlog>) => {
+  try {
+    const response = await axios.post(USERS_API_URL + "/auth/blog/add", blog, {
+      withCredentials: true,
+    });
+    //console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+// GET ALL BLOGS
+export const GetAllBlogs = async () => {
+  try {
+    const response = await axios.get(USERS_API_URL + "/auth/blog/get-all");
+    //console.log(response.data.blogs);
+    return response.data.blogs;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
   }
 };

@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const userRouter = require('./routes/users.routes');
+const blogRouter = require('./routes/blogs.routes');
 
 require('dotenv').config();
 require('./db');
@@ -46,7 +47,8 @@ app.use(passport.session());
 // });
 
 
-app.use('/', userRouter);
+app.use('/auth', userRouter);
+app.use('/auth/blog', blogRouter);
 
 app.listen(PORT, () => {
     console.log(`App listening on https:localhost:${PORT}`);

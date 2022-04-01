@@ -1,17 +1,19 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Blog = require('../db/models/blog.model');
+const { session } = require('passport');
 const blogRouter = express.Router();
+const Blog = require('../db/models/blog.model').Blog;
 
 /*
 ---------- ADD A BLOG ----------
 */
-blogRouter.post('/auth/add', (req, res) => {
+blogRouter.post('/add', (req, res) => {
+    const id = req.user._id.toLocaleString();
+    const date = new Date();
     const newBlog = new Blog ({
         title: req.body.title,
         article: req.body.article,
-        datePublished: new Date().toLocaleString,
-        authorID: mongoose.Types.ObjectId("asdfadgfagadsfgadsfg")
+        datePublished: date.toISOString(),
+        authorId: id
     });
 
     newBlog.save()
@@ -20,6 +22,22 @@ blogRouter.post('/auth/add', (req, res) => {
                 blog: blog
             });
         });
-})
+});
+
+/*
+---------- GET ALL BLOGS ----------
+*/
+
+blogRouter.get('/get-all', (req, res) => {
+    Blog.find({}, (err, allBlogs) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).json({
+                blogs: allBlogs.reverse()
+            });
+        } 
+    });
+});
 
 module.exports = blogRouter;

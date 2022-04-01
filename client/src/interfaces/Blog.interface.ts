@@ -1,8 +1,7 @@
 export default interface IBlog {
     _id: Number,
-    profile_id: Number,
+    authorId: Number,
     title: string,
     article: string,
-    author: string,
-    published: string,
+    datePublished: Date,
 }

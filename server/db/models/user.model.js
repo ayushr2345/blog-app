@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { blogSchema } = require('./blog.model') 
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -21,7 +20,6 @@ const userSchema = new mongoose.Schema({
     dob: Date,
     profileImage: Buffer,
     bio: String,
-    blogs: [blogSchema]
 });
 
 

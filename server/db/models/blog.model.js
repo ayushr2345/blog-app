@@ -13,8 +13,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    authorId: mongoose.Schema.ObjectId
+    authorId: {
+        type: mongoose.Schema.ObjectId,
+        required: true
+    },
 });
 
-module.exports.blogSchema = blogSchema;
 module.exports.Blog = mongoose.model('Blog', blogSchema);

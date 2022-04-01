@@ -4,7 +4,6 @@
     margin: auto;
     margin-top: 3%;
 }
-
 .break {
     height: 5%;
     font-size: medium;
@@ -15,10 +14,76 @@
     margin-top: 3%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 17.5%;
+    margin-top: 2.5%;
+}
+.break-form {
+    height: 5%;
+    font-size: larger;
+    font-weight: 600;
+    border: 2px solid black;
+    width: 75%;
+    margin: auto;
+    margin-top: -3%;
+}
+.user {
+    display: inline-block;
+    position: absolute;
+    border: 4px double rgba(167, 165, 165, 0.76);
+    padding: 1rem;
+    margin: auto;
+    width: 75%;
+    top: 10rem;
+    left: 12.5%;
+}
+.user-name {
+    margin: 1rem;
+    margin-bottom: -20px;
+    font-weight: 600;
+    font-size: x-large;
+    font-variant: small-caps;
+}
+.user-email {
+    font-weight: 500;
+    font-size: medium;
+    color: rgb(88, 88, 88);
+}
+.heading {
+    font-size: larger;
+    font-style: italic;
+    font-weight: 700;
+}
+.form {
+    display: block;
+    width: 75%;
+    margin: auto;
+    margin-top: 15rem;
+    margin-bottom: 5%;
+    border: 2px dashed rgba(167, 165, 165, 0.76);
+    padding: 1%;
+    padding-bottom: 0.5%;
+}
+.button-form {
+    width: 60%
+}
+.button-form-submit {
+    border: 1px solid black;
+    font-weight: 600;
+    font-size: large;
+    border-radius: 50%;
+    width: 4.5%;
+    display: inline-block;
+    position: absolute;
+    top: 58%;
+    right: 15%;
+}
+.add-button {
+    text-align: center;
 }
 
 @media only screen and (min-width: 1280px) {
     .blog-card {
+        text-align: left;
         display: block;
         width: 60%;
         margin: auto;
@@ -33,6 +98,17 @@
         margin-top: 3%;
         margin-left: 16%
     }
+    .break-form {
+        height: 5%;
+        font-size: larger;
+        font-weight: 600;
+        border: 2px solid black;
+        width: 60%;
+        margin: auto;
+        margin-top: 1.25%;
+        margin-left: 16%;
+        margin-bottom: 3%;
+    }
     .blog {
         display: inline-block;
         position: absolute;
@@ -40,12 +116,13 @@
     .user {
         display: inline-block;
         position: absolute;
-        top: 17%;
-        right: 3.5%;
-        border: 1px solid rgba(167, 165, 165, 0.76);
+        border: 5px double rgba(131, 131, 131, 0.76);
         padding: 1rem;
-        margin: 1rem;
-        width: 15%;
+        margin: auto;
+        width: 17%;
+        top: 18.5%;
+        left: 80%;
+        height: 25%;
     }
     .user-name {
         margin: 1rem;
@@ -66,8 +143,38 @@
     .form {
         margin-top: 10%;
         margin-bottom: 30%;
+        display: block;
+        width: 60%;
+        margin: auto;
+        margin-top: 3%;
+        margin-left: 16%;
+        border: 2px dashed rgba(167, 165, 165, 0.76);
+        padding: 1%;
+        padding-bottom: 0.5%;
     }
     .button-form {
-        width: 60%;
+        width: 60%
+    }
+    .button-form-submit {
+        border: 1px solid black;
+        font-weight: 600;
+        font-size: large;
+        border-radius: 50%;
+        width: 2.25%;
+        display: inline-block;
+        position: absolute;
+        top: 38%;
+        right: 26%;
+    }
+    .add-button {
+        text-align: center;
+    }
+    .card-date {
+        display: inline-block;
+        position: absolute;
+        right: 1%;
+    }
+    .article-text {
+        width: 85%;
     }
 }

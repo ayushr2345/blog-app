@@ -8,7 +8,7 @@ require('dotenv').config();
 /*
 ---------- CREATE A USER ----------
 */
-userRouter.post('/auth/signup', async (req, res) => {
+userRouter.post('/signup', async (req, res) => {
     const { salt, hash } = generatePassword(req.body.password);
     
     const user = await User.findOne({ email: req.body.email });
@@ -45,7 +45,7 @@ userRouter.post('/auth/signup', async (req, res) => {
 ---------- LOGIN A USER ----------
 */
 
-userRouter.post('/auth/login', passportLocal.authenticate('local'), (req, res) => {
+userRouter.post('/login', passportLocal.authenticate('local'), (req, res) => {
     // it creates a session even when the user is not present in the db
     return res.status(200).json({
         message: "logged in",
@@ -56,7 +56,7 @@ userRouter.post('/auth/login', passportLocal.authenticate('local'), (req, res) =
 ---------- LOGOUT A USER ----------
 */
 
-userRouter.get('/auth/logout', (req, res) => {
+userRouter.get('/logout', (req, res) => {
     req.logout();
     res.clearCookie('connect.sid');
     req.session.destroy((err) => {
@@ -73,7 +73,7 @@ userRouter.get('/auth/logout', (req, res) => {
 /*
 ---------- CHECK FOR SESSION IN SESSION COLLECTION ----------
 */
-userRouter.get('/auth/session', async (req, res) => {
+userRouter.get('/session', async (req, res) => {
     if (req.user) {
         const user = await User.findOne({ _id: req.user._id });
         return res.json({
@@ -86,4 +86,18 @@ userRouter.get('/auth/session', async (req, res) => {
     }
 });
 
+/*
+---------- GET USER'S NAME TO DISPLAY IN THE ARTICLE CARD ----------
+*/
+userRouter.post('/get-name', async (req, res) => {
+    User.findOne({_id: req.body.authorId}, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).json({
+                user: user
+            });
+        }
+    });
+});
 module.exports = userRouter;

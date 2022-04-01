@@ -25,9 +25,7 @@ function ProtectedRoutes() {
       } else {
         setIsLoggedIn(true);
         setLoading(false);
-        //console.log(user);
         setUser(res.user);
-        //console.log(user);
       }
     });
   }, []);
