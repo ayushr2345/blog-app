@@ -19,7 +19,7 @@ function ProtectedLoginRoutes() {
   }, []);
 
   if (isLoading) {
-    return <>Loading</>;
+    return <>Loading...</>;
   } else {
     if (!isLoggedIn) {
       return <Outlet />;

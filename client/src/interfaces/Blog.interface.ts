@@ -1,6 +1,6 @@
 export default interface IBlog {
-    _id: Number,
-    authorId: Number,
+    _id: String,
+    authorId: String,
     title: string,
     article: string,
     datePublished: Date,

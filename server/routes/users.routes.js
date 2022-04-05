@@ -90,14 +90,16 @@ userRouter.get('/session', async (req, res) => {
 ---------- GET USER'S NAME TO DISPLAY IN THE ARTICLE CARD ----------
 */
 userRouter.post('/get-name', async (req, res) => {
-    User.findOne({_id: req.body.authorId}, (err, user) => {
-        if (err) {
-            console.log(err);
-        } else {
-            return res.status(200).json({
-                user: user
-            });
-        }
-    });
+    if (req.body.authorId) {
+        User.findOne({_id: req.body.authorId}, (err, user) => {
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).json({
+                    user: user
+                });
+            }
+        });
+    }
 });
 module.exports = userRouter;

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Navigate,
-  Outlet,
-  useOutlet,
-  useOutletContext,
+  Outlet
 } from "react-router-dom";
 import IUser from "../../interfaces/User.interface";
 import { MatchAUserSession } from "../../services/userService";

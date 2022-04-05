@@ -27,7 +27,6 @@ blogRouter.post('/add', (req, res) => {
 /*
 ---------- GET ALL BLOGS ----------
 */
-
 blogRouter.get('/get-all', (req, res) => {
     Blog.find({}, (err, allBlogs) => {
         if (err) {
@@ -40,4 +39,18 @@ blogRouter.get('/get-all', (req, res) => {
     });
 });
 
+/*
+---------- GET A BLOG ----------
+*/
+blogRouter.post('/get-one', (req, res) => {
+    Blog.find({ _id: req.body.id }, (err, allBlogs) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).json({
+                blogs: allBlogs.reverse()
+            });
+        } 
+    });
+});
 module.exports = blogRouter;

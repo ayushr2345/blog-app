@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import IUser from "../../interfaces/User.interface";
 import { MatchAUserSession } from "../../services/userService";
 
-function ProtectedSignupRoutes() {
+function ProtectedProfileRoute() {
+  const [user, setUser] = useState<Partial<IUser>>({
+    name: "",
+    email: "",
+    dob: "",
+  });
   const [isLoading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
@@ -14,6 +20,7 @@ function ProtectedSignupRoutes() {
       } else {
         setIsLoggedIn(true);
         setLoading(false);
+        setUser(res.user);
       }
     });
   }, []);
@@ -21,12 +28,12 @@ function ProtectedSignupRoutes() {
   if (isLoading) {
     return <>Loading...</>;
   } else {
-    if (!isLoggedIn) {
-      return <Outlet />;
+    if (isLoggedIn) {
+      return <Outlet context={{ user }} />;
     } else {
-      return <Navigate to="/auth/dashboard" />;
+      return <Navigate to="/login" />;
     }
   }
 }
 
-export default ProtectedSignupRoutes;
+export default ProtectedProfileRoute;

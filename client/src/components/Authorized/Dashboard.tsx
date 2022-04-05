@@ -5,10 +5,12 @@ import { Button, Form } from "react-bootstrap";
 import { AddBlog, GetAllBlogs, logOutUser } from "../../services/userService";
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import IUser from "../../interfaces/User.interface";
+import BlogCardLatest from "./CardLatest";
+import { LinkContainer } from "react-router-bootstrap";
 
 type Blog = {
-  _id: Number;
-  authorId: Number;
+  _id: String;
+  authorId: String;
   title: string;
   article: string;
   datePublished: Date;
@@ -21,8 +23,8 @@ function Dashboard() {
   const [blog, setBlog] = useState<Blog>({
     title: "",
     article: "",
-    _id: 0,
-    authorId: 0,
+    _id: "",
+    authorId: "",
     datePublished: date,
   });
   const [user, setUser] = useState<Partial<IUser>>({
@@ -41,10 +43,7 @@ function Dashboard() {
     }
   }, [user]);
 
-  // console.log(blogList);
-  // console.log(user);
   //console.log(blogList);
-
   const validateForm = () => {
     if (blog.article.length > 0 && blog.title.length > 0) {
       return true;
@@ -62,14 +61,15 @@ function Dashboard() {
       setBlog({
         title: "",
         article: "",
-        _id: 0,
-        authorId: 0,
+        _id: "",
+        authorId: "",
         datePublished: date,
       });
     } else {
       navigate("/");
     }
   };
+  let i = 0;
   return (
     <div className="blogs">
       {/* Create a Blog */}
@@ -110,17 +110,38 @@ function Dashboard() {
           />
         </Form.Group>
 
-        <Button
-          onClick={handleSubmit}
-          variant="outline-dark"
-          type="submit"
-          className="button-form-submit"
-        >
-          <div className="add-button">+</div>
-        </Button>
+        <div className="buttons">
+          <Button
+            onClick={() => {
+              setBlog({
+                title: "",
+                article: "",
+                _id: "",
+                authorId: "",
+                datePublished: date,
+              });
+            }}
+            variant="danger"
+            type="submit"
+            className="button-form-reset"
+          >
+            Reset
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            variant="outline-dark"
+            type="submit"
+            className="button-form-submit"
+          >
+            Post
+          </Button>
+        </div>
       </Form>
-      <div className="break-form">----- BLOGS ----</div>
-
+      {blogList.length == 0 ? (
+        <></>
+      ) : (
+        <div className="break-form">----- BLOGS ----</div>
+      )}
       {/* ALL BLOGS */}
       <div>
         {blogList.map((blog: IBlog, _id) => {
@@ -133,9 +154,24 @@ function Dashboard() {
       <div className="user">
         <div className="user-name">{user.name}</div>
         <br />
-        <div className="user-email">{user.email}</div>
+        <div className="user-email">
+          {user.email} <br /> 
+          <LinkContainer className="goto-profile" to="/auth/profile">
+            <a >Go to Profile</a>
+          </LinkContainer>
+        </div>
         <br />
 
+        <b>Latest Blogs</b>
+        <div>
+          {blogList.map((blog: IBlog, _id) => {
+            if (blog.authorId != user._id && i < 3) {
+              i++;
+              return <BlogCardLatest blog={blog} key={_id} />;
+            }
+          })}
+        </div>
+        <br />
         <Button
           className="logout-button button-form"
           variant="outline-danger"

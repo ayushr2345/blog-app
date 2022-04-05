@@ -14,6 +14,10 @@ import ProtectedRoutes from "./components/Authorized/ProtectedRoutes";
 import ProtectedLoginRoutes from "./components/Authorized/ProtectedLoginRoute";
 import ProtectedSignupRoutes from "./components/Authorized/ProtectedSignupRoute";
 import IUser from "./interfaces/User.interface";
+import Blog from "./components/Authorized/Blog";
+import ProtectedBlogRoute from "./components/Authorized/ProtectedBlogRoute";
+import Profile from "./components/Authorized/Profile";
+import ProtectedProfileRoute from "./components/Authorized/ProtectedProfileRoute";
 
 function App() {
   const [user, setUser] = useState<Partial<IUser>>({
@@ -45,6 +49,16 @@ function App() {
           <Route path="" element={<Dashboard />} />
         </Route>
         {/* Protected Routes for dashboard ends */}
+
+        {/* Protected route for Blog */}
+        <Route path={"/auth/blog/:id"} element={<ProtectedBlogRoute />}>
+          <Route path="" element={<Blog />} />
+        </Route>
+
+        {/* Protected route for Profile */}
+        <Route path={"/auth/profile"} element={<ProtectedProfileRoute />}>
+          <Route path="" element={<Profile />} />
+        </Route>
       </Routes>
       <Footer />
     </div>

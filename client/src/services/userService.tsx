@@ -107,3 +107,19 @@ export const GetAllBlogs = async () => {
     console.log(err);
   }
 };
+
+// GET A BLOG
+export const GetABlog = async (id: String) => {
+  try {
+    const response = await axios.post(
+      USERS_API_URL + "/auth/blog/get-one",
+      {id: id},
+      { withCredentials: true }
+    );
+    //console.log(response.data);
+    return response.data.blogs;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
