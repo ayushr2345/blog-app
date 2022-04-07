@@ -53,4 +53,37 @@ blogRouter.post('/get-one', (req, res) => {
         } 
     });
 });
+
+/*
+---------- UPDATE A BLOG ----------
+*/
+blogRouter.put('/update', (req, res) => {
+    const updatedBlog = req.body.blog;
+    Blog.findOneAndUpdate({_id: req.body.blog._id}, updatedBlog, {
+            new: true
+        }, (err, newBlog) => {
+            if (err) {
+                console.log(err);
+            } else {
+                return res.status(200).json({
+                    updatedBlog: newBlog
+                });
+            }
+        });
+});
+
+/*
+---------- DELETE A BLOG ----------
+*/
+blogRouter.delete('/delete', (req, res) => {
+    Blog.deleteOne({_id: req.body.id}, {new: true}, (err, blog) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).json ({
+                deletedBlog: blog
+            });
+        }
+    });
+});
 module.exports = blogRouter;

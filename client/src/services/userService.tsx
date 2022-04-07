@@ -113,11 +113,45 @@ export const GetABlog = async (id: String) => {
   try {
     const response = await axios.post(
       USERS_API_URL + "/auth/blog/get-one",
-      {id: id},
+      { id: id },
       { withCredentials: true }
     );
     //console.log(response.data);
     return response.data.blogs;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+// UPDATE A BLOG
+export const UpdateABlog = async (blog: Partial<IBlog>) => {
+  try {
+    const response = await axios.put(
+      USERS_API_URL + "/auth/blog/update",
+      {
+        blog: blog,
+      },
+      { withCredentials: true }
+    );
+    //console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+// DELETE A BLOG
+export const DeleteABlog = async (id: String) => {
+  try {
+    const response = await axios.delete(USERS_API_URL + "/auth/blog/delete", {
+      data: {
+        id: id,
+      },
+    });
+    console.log(response.data);
+    return response.data;
   } catch (err) {
     console.log(USERS_API_URL);
     console.log(err);

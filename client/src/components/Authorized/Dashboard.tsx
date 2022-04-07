@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BlogCard from "./Card";
 import IBlog from "../../interfaces/Blog.interface";
 import { Button, Form } from "react-bootstrap";
@@ -140,7 +140,7 @@ function Dashboard() {
       {blogList.length == 0 ? (
         <></>
       ) : (
-        <div className="break-form">----- BLOGS ----</div>
+        <div className="break-form">----- ALL BLOGS ----</div>
       )}
       {/* ALL BLOGS */}
       <div>
