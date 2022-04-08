@@ -102,4 +102,20 @@ userRouter.post('/get-name', async (req, res) => {
         });
     }
 });
+
+/*
+---------- DELETE A USER ----------
+*/
+userRouter.delete('/delete', async (req, res) => {
+    // console.log(req.body);
+    if (req.body) {
+        User.findOneAndDelete({_id: req.body._id}, (err) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("deleted")
+            }
+        });
+    }
+});
 module.exports = userRouter;

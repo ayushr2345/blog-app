@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Card, Form, Modal } from "react-bootstrap";
+import { Alert, Button, Card, Form, Modal } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import IBlog from "../../interfaces/Blog.interface";
 import { DeleteABlog, GetUser, UpdateABlog } from "../../services/userService";
@@ -25,6 +25,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
   }, []);
   const [userName, setUserName] = useState<String>("");
   const [show, setShow] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -40,17 +41,26 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
   ) => {
     //console.log(updatedBlog);
     await UpdateABlog(updatedBlog).then((e) => {
-      console.log(e);
-      setUpdatedBlog(e.updatedBlog)
+      setUpdatedBlog(e.updatedBlog);
+      handleClose();
     });
   };
 
-  const handleDelete = async (
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    setShowDelete(true);
+  };
+  const handleDelete = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     await DeleteABlog(blog._id).then((e) => {
       //console.log(blog._id);
       //console.log(e);
+      handleCloseDelete();
+      window.location.reload();
     });
   };
 
@@ -59,7 +69,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
       <Card.Body>
         <LinkContainer to={"/auth/blog/" + blog._id}>
           <a>
-            <Card.Title>{blog.title}</Card.Title>
+            <Card.Title>{updatedBlog.title}</Card.Title>
           </a>
         </LinkContainer>
         <Card.Subtitle className="mb-2 text-muted">{userName}</Card.Subtitle>
@@ -67,13 +77,13 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
           {blog.datePublished.toString().slice(0, 10)}
         </Card.Subtitle>
         <Card.Text className="article-text">
-          {blog.article.slice(0, 300) + "..."}
+          {updatedBlog.article.slice(0, 300) + "..."}
         </Card.Text>
         <a href="">
-          <EditIcon className="edit-icon" onClick={handleShow}></EditIcon>
+          <EditIcon className="edit-icon" onClick={handleShow} />
         </a>
         <a href="">
-          <DeleteIcon className="delete-icon" onClick={handleDelete} />
+          <DeleteIcon className="delete-icon" onClick={handleShowDelete} />
         </a>
 
         {/* modal to edit the blog */}
@@ -127,6 +137,26 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
             </Button>
             <Button variant="primary" onClick={handleEdit}>
               Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Modal to confirm Deletion */}
+        <Modal show={showDelete} onHide={handleCloseDelete}>
+          <Modal.Header closeButton>
+            <Modal.Title>Deleting Blog</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Alert variant="danger">
+              Are you sure you want to delete this blog?
+            </Alert>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleCloseDelete}>
+              No
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Delete
             </Button>
           </Modal.Footer>
         </Modal>

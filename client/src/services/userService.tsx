@@ -56,6 +56,7 @@ export const MatchAUserSession = async () => {
     const response = await axios.get(USERS_API_URL + "/auth/session");
     //console.log(response.data);
     if (!response.data.user) {
+      // console.log(response)
       logOutUser();
     }
     return response.data;
@@ -71,6 +72,21 @@ export const GetUser = async (blog: Partial<IBlog>) => {
     const response = await axios.post(USERS_API_URL + "/auth/get-name", blog, {
       withCredentials: true,
     });
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+// DELETE A USER
+export const DeleteUser = async (user: Partial<IUser>) => {
+  try {
+    const response = await axios.delete(
+      USERS_API_URL + "/auth/delete",
+      { data: user },
+    );
+    console.log(response)
     return response.data;
   } catch (err) {
     console.log(USERS_API_URL);
@@ -148,6 +164,22 @@ export const DeleteABlog = async (id: String) => {
     const response = await axios.delete(USERS_API_URL + "/auth/blog/delete", {
       data: {
         id: id,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
+// DELETE ALL BLOG
+export const DeleteALLBlogs = async (user: Partial<IUser>) => {
+  try {
+    const response = await axios.delete(USERS_API_URL + "/auth/blog/delete-all", {
+      data: {
+        user: user,
       },
     });
     console.log(response.data);

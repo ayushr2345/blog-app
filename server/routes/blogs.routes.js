@@ -86,4 +86,20 @@ blogRouter.delete('/delete', (req, res) => {
         }
     });
 });
+
+/*
+---------- DELETE ALL BLOGS ----------
+*/
+blogRouter.delete('/delete-all', (req, res) => {
+    // console.log(req.body.user)
+    Blog.deleteMany({authorId: req.body.user._id}, {new: true}, (err, blog) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).json ({
+                message: "Deleted all blogs"
+            });
+        }
+    });
+});
 module.exports = blogRouter;
