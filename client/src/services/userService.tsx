@@ -82,11 +82,12 @@ export const GetUser = async (blog: Partial<IBlog>) => {
 // DELETE A USER
 export const DeleteUser = async (user: Partial<IUser>) => {
   try {
-    const response = await axios.delete(
-      USERS_API_URL + "/auth/delete",
-      { data: user },
-    );
-    console.log(response)
+    logOutUser();
+
+    const response = await axios.delete(USERS_API_URL + "/auth/delete", {
+      data: user,
+    });
+    console.log(response);
     return response.data;
   } catch (err) {
     console.log(USERS_API_URL);
@@ -177,11 +178,14 @@ export const DeleteABlog = async (id: String) => {
 // DELETE ALL BLOG
 export const DeleteALLBlogs = async (user: Partial<IUser>) => {
   try {
-    const response = await axios.delete(USERS_API_URL + "/auth/blog/delete-all", {
-      data: {
-        user: user,
-      },
-    });
+    const response = await axios.delete(
+      USERS_API_URL + "/auth/blog/delete-all",
+      {
+        data: {
+          user: user,
+        },
+      }
+    );
     console.log(response.data);
     return response.data;
   } catch (err) {

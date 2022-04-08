@@ -27,7 +27,9 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  };
   const handleShow = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.preventDefault();
     setShow(true);
@@ -46,6 +48,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
     });
   };
 
+  //  DELETE
   const handleCloseDelete = () => setShowDelete(false);
   const handleShowDelete = (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
@@ -53,7 +56,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
     event.preventDefault();
     setShowDelete(true);
   };
-  const handleDelete = async (
+  const handleDeleteBlog = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     await DeleteABlog(blog._id).then((e) => {
@@ -69,7 +72,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
       <Card.Body>
         <LinkContainer to={"/auth/blog/" + blog._id}>
           <a>
-            <Card.Title>{updatedBlog.title}</Card.Title>
+            <Card.Title>{blog.title}</Card.Title>
           </a>
         </LinkContainer>
         <Card.Subtitle className="mb-2 text-muted">{userName}</Card.Subtitle>
@@ -77,7 +80,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
           {blog.datePublished.toString().slice(0, 10)}
         </Card.Subtitle>
         <Card.Text className="article-text">
-          {updatedBlog.article.slice(0, 300) + "..."}
+          {blog.article.slice(0, 300) + "..."}
         </Card.Text>
         <a href="">
           <EditIcon className="edit-icon" onClick={handleShow} />
@@ -155,7 +158,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
             <Button variant="primary" onClick={handleCloseDelete}>
               No
             </Button>
-            <Button variant="danger" onClick={handleDelete}>
+            <Button variant="danger" onClick={handleDeleteBlog}>
               Delete
             </Button>
           </Modal.Footer>

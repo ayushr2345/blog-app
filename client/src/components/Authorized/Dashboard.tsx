@@ -54,16 +54,17 @@ function Dashboard() {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      await AddBlog(blog);
+      await AddBlog(blog).then(() => {
+        setBlog({
+          title: "",
+          article: "",
+          _id: "",
+          authorId: "",
+          datePublished: date,
+        });
+      });
       GetAllBlogs().then((e) => {
         setBlogList(e);
-      });
-      setBlog({
-        title: "",
-        article: "",
-        _id: "",
-        authorId: "",
-        datePublished: date,
       });
     } else {
       navigate("/");
@@ -155,9 +156,9 @@ function Dashboard() {
         <div className="user-name">{user.name}</div>
         <br />
         <div className="user-email">
-          {user.email} <br /> 
+          {user.email} <br />
           <LinkContainer className="goto-profile" to="/auth/profile">
-            <a >Go to Profile</a>
+            <a>Go to Profile</a>
           </LinkContainer>
         </div>
         <br />
