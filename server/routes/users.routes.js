@@ -107,6 +107,24 @@ userRouter.post('/get-name', async (req, res) => {
 });
 
 /*
+---------- UPDATE A USER ----------
+*/
+userRouter.put('/update', async (req, res) => {
+    const user = req.body.data.user;
+    if (req.body.data.user) {
+        User.findOneAndUpdate({_id: user._id}, user, {new: true}, (err, updatedUser) => {
+            if (err) {
+                console.log(err)
+            } else {
+                return res.status(200).json({
+                    updatedUser: updatedUser
+                });
+            }
+        });
+    }
+});
+
+/*
 ---------- DELETE A USER ----------
 */
 userRouter.delete('/delete', async (req, res) => {

@@ -9,9 +9,10 @@ import "./Dashboard.css";
 
 type Props = {
   blog: IBlog;
+  updateBlogList: () => void
 };
 
-const BlogCardProfile: FC<Props> = ({ blog }) => {
+const BlogCardProfile: FC<Props> = ({ blog, updateBlogList }) => {
   const date = new Date();
   const [updatedBlog, setUpdatedBlog] = useState<IBlog>({
     title: "",
@@ -29,6 +30,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
 
   const handleClose = () => {
     setShow(false);
+    setUpdatedBlog(blog);
   };
   const handleShow = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.preventDefault();
@@ -45,6 +47,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
     await UpdateABlog(updatedBlog).then((e) => {
       setUpdatedBlog(e.updatedBlog);
       handleClose();
+      updateBlogList();
     });
   };
 
@@ -63,7 +66,7 @@ const BlogCardProfile: FC<Props> = ({ blog }) => {
       //console.log(blog._id);
       //console.log(e);
       handleCloseDelete();
-      window.location.reload();
+      updateBlogList();
     });
   };
 

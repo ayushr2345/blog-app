@@ -79,6 +79,26 @@ export const GetUser = async (blog: Partial<IBlog>) => {
   }
 };
 
+// UPDATE A USER
+export const UpdateUser = async (user: Partial<IUser>) => {
+  try {
+    const response = await axios.put(
+      USERS_API_URL + "/auth/update",
+      {
+        data: {
+          user: user,
+        },
+      },
+      { withCredentials: true }
+    );
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
 // DELETE A USER
 export const DeleteUser = async (user: Partial<IUser>) => {
   try {

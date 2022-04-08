@@ -8,6 +8,7 @@ import {
   DeleteALLBlogs,
   DeleteUser,
   GetAllBlogs,
+  UpdateUser,
 } from "../../services/userService";
 import BlogCardProfile from "./CardProfile";
 import "./Profile.css";
@@ -32,8 +33,6 @@ function Profile() {
   });
 
   const [blogList, setBlogList] = useState<Blog[]>([]);
-  const [showAccountDelete, setShowAccountDelete] = useState(false);
-  const [showAccountEdit, setShowAccountEdit] = useState(false);
 
   const newUser = useOutletContext<{ user: Partial<IUser> }>().user;
   useEffect(() => {
@@ -47,6 +46,22 @@ function Profile() {
     }
   }, [newUser]);
 
+  const updateBlogList = () => {
+    GetAllBlogs().then((e) => {
+      setBlogList(e);
+    });
+  };
+
+  const handleUpdateAccount = async () => {
+    await UpdateUser(updatedUser).then((e)=>{
+      console.log(e)
+    });
+    handleCloseAccountEdit();
+  }
+
+  // ACCOUNT DELETE
+  const [showAccountDelete, setShowAccountDelete] = useState(false);
+  const [showAccountEdit, setShowAccountEdit] = useState(false);
   const handleCloseAccountDelete = () => setShowAccountDelete(false);
   const handleShowAccountDelete = () => setShowAccountDelete(true);
 
@@ -59,6 +74,7 @@ function Profile() {
     await DeleteALLBlogs(user);
     await DeleteUser(user);
   };
+
   return (
     <div>
       {/* PROFILE */}
@@ -79,12 +95,12 @@ function Profile() {
           className="edit-profile-button"
           onClick={handleShowAccountEdit}
         >
-          Edit Profile
+          Update Profile
         </Button>
         {/* Modal to Edit Profile */}
         <Modal show={showAccountEdit} onHide={handleCloseAccountEdit}>
           <Modal.Header closeButton>
-            <Modal.Title>Editing Profile</Modal.Title>
+            <Modal.Title>Updating Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -95,12 +111,37 @@ function Profile() {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={updatedUser.name}
+                  value={user.name}
+                  disabled={true}
+                />
+              </Form.Group>
+
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={user.email}
+                  disabled={true}
+                />
+              </Form.Group>
+
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Date Of Birth</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={}
+                  disabled={user.dob ? true : false}
                   onChange={(event) => {
-                    const name = event.currentTarget.value;
+                    const dob = event.currentTarget.value;
                     setUpdatedUser({
                       ...updatedUser,
-                      name: name,
+                      dob: dob,
                     });
                   }}
                 />
@@ -111,7 +152,7 @@ function Profile() {
             <Button variant="danger" onClick={handleCloseAccountEdit}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleCloseAccountEdit}>
+            <Button variant="primary" onClick={handleUpdateAccount}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -153,7 +194,13 @@ function Profile() {
         <div>
           {blogList.map((blog: IBlog, _id) => {
             if (blog.authorId === user._id) {
-              return <BlogCardProfile blog={blog} key={_id} />;
+              return (
+                <BlogCardProfile
+                  blog={blog}
+                  updateBlogList={updateBlogList}
+                  key={_id}
+                />
+              );
             }
           })}
         </div>
