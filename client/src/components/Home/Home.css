@@ -26,14 +26,6 @@
     width: 50%;
 }
 
-.google-login-button {
-    display: inline-block;
-    position: absolute;
-    width: 50% !important;
-    margin-top: 2%;
-    margin-left: 25%;
-}
-
 .pitch-text {
     width: 77.5%;
     margin: auto;
@@ -68,22 +60,12 @@
     }
 
     .login-button {
-        width: 30%;
+        width: 60%;
         margin-right: 1%;
     }
 
     .signup-button {
-        display: inline;
-        margin-left: 1%;
-        margin-top: 0;
-        width: 30%;
-    }
-    .google-login-button {
-        display: inline-block;
-        position: absolute;
-        width: 61.5% !important;
-        margin-top: 3%;
-        margin-left: 19.5%;
+        width: 60%;
     }
     .pitch-text {
         display: inline-block;

@@ -6,7 +6,6 @@ import { AddBlog, GetAllBlogs, logOutUser } from "../../services/userService";
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import IUser from "../../interfaces/User.interface";
 import BlogCardLatest from "./CardLatest";
-import AddIcon from "@mui/icons-material/Add";
 import { LinkContainer } from "react-router-bootstrap";
 
 type Blog = {
@@ -74,7 +73,6 @@ function Dashboard() {
   let i = 0;
   return (
     <div className="blogs">
-      <AddIcon fontSize="large" className="add-icon" />
       {/* Create a Blog */}
       <Form id="create-blog">
         <Form.Label className="heading">Post a new Article</Form.Label>
@@ -95,22 +93,22 @@ function Dashboard() {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="article">
-          <Form.Control
-            required
-            name="article"
-            value={blog.article}
-            as="textarea"
-            rows={5}
-            placeholder="Sart typing"
-            onChange={(event) => {
-              const article = event.currentTarget.value;
-              setBlog({
-                ...blog,
-                article: article,
-              });
-            }}
-          />
+        <Form.Group className="mb-3" controlId="article" >
+            <Form.Control
+              required
+              name="article"
+              value={blog.article}
+              as="textarea"
+              rows={5}
+              placeholder="Sart typing"
+              onChange={(event) => {
+                const article = event.currentTarget.value;
+                setBlog({
+                  ...blog,
+                  article: article,
+                });
+              }}
+            />
         </Form.Group>
 
         <div className="buttons">
@@ -131,6 +129,7 @@ function Dashboard() {
             Reset
           </Button>
           <Button
+            disabled={!validateForm()}
             onClick={handleSubmit}
             variant="outline-dark"
             type="submit"
@@ -147,7 +146,7 @@ function Dashboard() {
         <div className="break-form">----- ALL BLOGS ----</div>
       )}
       {/* ALL BLOGS */}
-      <div>
+      <div className="all-blogs">
         {blogList.map((blog: IBlog, _id) => {
           return <BlogCard blog={blog} key={_id} />;
         })}
@@ -163,8 +162,8 @@ function Dashboard() {
               className="profile-image"
               src={`${user.profileImage}`}
               alt="avatar"
-              width="256"
-              height="256"
+              width="128"
+              height="128"
             />
           )}
         </div>

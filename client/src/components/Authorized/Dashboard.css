@@ -11,6 +11,13 @@ a:hover {
     margin: auto;
     margin-top: 3%;
 }
+.blog-card-blog-page {
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-top: 3%;
+    margin-bottom: 40%;
+}
 .blog-card-latest {
     text-align: left;
     display: block;
@@ -86,12 +93,11 @@ a:hover {
     display: block;
     width: 75%;
     margin: auto;
-    margin-top: 45rem;
+    margin-top: 52.5rem;
     margin-bottom: 10%;
     border: 2px dashed rgba(167, 165, 165, 0.76);
     padding: 1%;
     padding-bottom: 0.5%;
-    display: none;
 }
 .add-icon {
     background-color: #000;
@@ -136,7 +142,11 @@ a:hover {
     left: 7.5%;
     width: 25%;
 }
-
+.profile-image-dashboard, .profile-image-blog {
+    border-radius: 50%;
+    text-align: center;
+    
+}
 @media only screen and (min-width: 1280px) {
     a {
         text-decoration: none;
@@ -145,13 +155,32 @@ a:hover {
     a:hover {
         color: #000;
     }
-    .blog-card {
+    .all-blogs {
+        
         text-align: left;
-        display: block;
         width: 60%;
         margin: auto;
         margin-top: 3%;
         margin-left: 16%;
+        
+        
+    }
+    .blog-card {
+        text-align: left;
+        width: 100%;
+        margin: auto;
+        margin-bottom: 5%;
+        padding-bottom: 4%;
+    }
+    .blog-card-blog-page {
+        text-align: left;
+        display: block;
+        width: 67.5%;
+        margin: auto;
+        margin-top: 3%;
+        margin-left: 16%;   
+        margin-bottom: 10%;     
+        padding-bottom: 5%;
     }
     .blog-card-latest {
         text-align: left;
@@ -178,10 +207,10 @@ a:hover {
     .break {
         height: 5%;
         border: 2px solid black;
-        margin-bottom: 10%;
-        width: 60%;
+        margin-bottom: 15%;
+        width: 100%;
         margin-top: 3%;
-        margin-left: 16%
+        text-align: center;
     }
     .break-form {
         height: 5%;
@@ -241,7 +270,6 @@ a:hover {
         border: 2px dashed rgba(167, 165, 165, 0.76);
         padding: 1%;
         padding-bottom: 0.5%;
-        display: none;
     }
     .button-form {
         width: 60%
@@ -284,15 +312,20 @@ a:hover {
         width: 85%;
     }
     .profile-image-dashboard {
+        position: absolute;
         border-radius: 50%;
-        margin-left: 87.5%;
-        margin-top: -15%;
+        margin-left: 79%;
+        margin-top: -7%;
     }
     .profile-image-blog {
         display: inline-block;
         position: absolute;
         border-radius: 50%;
         margin-left: 79%;
-        top: 25%;
+        top: 7.5%;
+    }
+    .article-text{
+        text-align: left;
+        width: 80%;
     }
 }

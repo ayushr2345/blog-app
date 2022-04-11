@@ -126,10 +126,10 @@ function Profile() {
       {/* PROFILE */}
       <div className="profile">
         <div>
-          <div className="image-section">
+          <div className="image-section-profile">
             {user.profileImage && (
               <img
-                className="profile-image"
+                className="profile-image-profile"
                 src={`${user.profileImage}`}
                 alt="avatar"
                 width="256"

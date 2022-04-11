@@ -81,7 +81,7 @@ function Signup() {
       if (authenticated) {
         navigate("/auth/dashboard");
       } else {
-        navigate("/signup");
+        return alert("The email is already in use")
       }
     } else {
       navigate("/");
@@ -146,6 +146,7 @@ function Signup() {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Control
+            autoComplete="on"
             required
             type="password"
             name="password"
@@ -170,6 +171,7 @@ function Signup() {
 
         <Form.Group className="mb-3" controlId="formBasicPasswordRetype">
           <Form.Control
+            autoComplete="on"
             required
             type="password"
             name="password-retyped"

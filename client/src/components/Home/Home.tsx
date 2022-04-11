@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "react-bootstrap/Image";
-import GoogleButton from "react-google-button";
 import "./Home.css";
 import { Button } from "react-bootstrap";
 import Pitch from "./Pitch";
@@ -33,8 +32,6 @@ function Home() {
             Sign Up
           </Button>
         </LinkContainer>
-
-        <GoogleButton className="google-login-button" />
       </div>
     </div>
   );

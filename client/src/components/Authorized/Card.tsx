@@ -21,31 +21,32 @@ const BlogCard: FC<Props> = ({ blog }) => {
   });
 
   return (
-    <a href={"/auth/blog/" + blog._id}>
-      <Card className="blog-card">
-        <Card.Body>
-          <Card.Title>{blog.title}</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted">{user.name}</Card.Subtitle>
-          <Card.Subtitle className="mb-2 text-muted card-date">
-            {blog.datePublished.toString().slice(0, 10)}
-          </Card.Subtitle>
-          <Card.Text className="article-text">
-            {blog.article.slice(0, 300) + "..."}
-          </Card.Text>
-          <div className="image-section">
-            {user.profileImage && (
-              <img
-                className="profile-image-dashboard"
-                src={`${user.profileImage}`}
-                alt="avatar"
-                width="128"
-                height="128"
-              />
-            )}
-          </div>
-        </Card.Body>
-      </Card>
-    </a>
+      <a href={"/auth/blog/" + blog._id} >
+        <Card className="blog-card">
+          <Card.Body>
+            <Card.Title>{blog.title}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">{user.name}</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted card-date">
+              {blog.datePublished.toString().slice(0, 10)}
+            </Card.Subtitle>
+            <div className="image-section">
+              {user.profileImage && (
+                <img
+                  className="profile-image-dashboard"
+                  src={`${user.profileImage}`}
+                  alt="avatar"
+                  width="128"
+                  height="128"
+                />
+              )}
+            </div>
+            <Card.Text className="article-text">
+              {blog.article.slice(0, 300) + "..."}
+            </Card.Text>
+
+          </Card.Body>
+        </Card>
+      </a>
   );
 };
 

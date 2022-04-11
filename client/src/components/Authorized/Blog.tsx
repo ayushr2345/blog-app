@@ -44,14 +44,13 @@ function Blog() {
 
   return (
     <div>
-      <Card className="blog-card">
+      <Card className="blog-card-blog-page">
         <Card.Body>
           <Card.Title>{blog.title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{user.name}</Card.Subtitle>
           <Card.Subtitle className="mb-2 text-muted card-date">
             {blog.datePublished.toString().slice(0, 10)}
           </Card.Subtitle>
-          <Card.Text className="article-text">{blog.article}</Card.Text>
           <div className="image-section">
             {user.profileImage && (
               <img
@@ -63,6 +62,8 @@ function Blog() {
               />
             )}
           </div>
+          <Card.Text className="article-text" style={{whiteSpace: "pre-wrap",}}>{blog.article}</Card.Text>
+          
         </Card.Body>
       </Card>
     </div>

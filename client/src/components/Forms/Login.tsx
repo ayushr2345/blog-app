@@ -69,7 +69,7 @@ function Login() {
       if (authenticated) {
         navigate("/auth/dashboard");
       } else {
-        navigate("/login");
+        return alert("Wrong password or email")
       }
     } else {
       navigate("/");
@@ -118,6 +118,7 @@ function Login() {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Control
+            autoComplete="on"
             required
             type="password"
             placeholder="Password"

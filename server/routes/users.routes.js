@@ -81,11 +81,8 @@ userRouter.post('/login', passportLocal.authenticate('local'), (req, res) => {
 
 userRouter.get('/logout', (req, res) => {
     req.logout();
-    console.log("asdf");
     res.clearCookie('connect.sid');
-    console.log("asdf 2");
     req.session.destroy((err) => {
-        console.log("asdf 3");
         if (err) {
             console.log(err);
         } else {

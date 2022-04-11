@@ -45,6 +45,64 @@
     margin-bottom: 2.5%;
     margin-top: 2.5%;
 }
+.delete-icon {
+    color: rgb(170, 56, 56);
+    display: inline-block;
+    margin-left: 90%;
+    margin-top: -20%;
+    transform: scale(1.1);
+}
+.edit-icon {
+    display: inline-block;
+    margin-left: 80%;
+    margin-top: 5%;
+    transform: scale(1.1);
+}
+.goto-dashboard {
+    font-weight: 400;
+    font-size: medium;
+    margin: auto;
+    margin-top: 20%;
+    color: rgb(88, 88, 88);
+}
+.delete-profile-button {
+    margin: auto;
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+    width: 60%;
+}
+.edit-profile-button {
+    width: 60%;
+}
+.hidden-form-image {
+    display: none;
+}
+.edit-profile-image {
+    cursor: pointer;
+    margin: auto;
+    margin-top: 1000%;
+    margin-left: -300%;
+    width: 1000%;
+    border: 2px solid rgb(119, 119, 119);
+    border-radius: 20%;
+}
+.profile-image {
+    margin: auto;
+    border-radius: 50%;
+}
+.profile-image-profile {
+    border-radius: 50%;
+}
+.image-section {
+    width: 100%;
+    margin: auto;
+}
+.image-section-profile {
+    width: 100%;
+    margin: auto;
+    margin-top: 2.5%;
+    margin-left: 5%;
+}
 @media only screen and (min-width: 1280px) {
     .profile {
         display: inline-block;
@@ -104,7 +162,7 @@
         color: rgb(170, 56, 56);
         display: inline-block;
         margin-left: 97.5%;
-        margin-top: -5.25%;
+        margin-top: -5.5%;
         transform: scale(1.1);
     }
     .edit-icon {
@@ -150,6 +208,7 @@
     .profile-image {
         margin: auto;
         border-radius: 50%;
+        margin-left: -15%;
     }
     .image-section {
         margin: auto;
