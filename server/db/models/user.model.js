@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -18,7 +19,12 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     dob: Date,
-    profileImage: Buffer,
+    profileImage: {
+        required: true,
+        type: String,
+        default: "data:image/png;base64," + fs.readFileSync(`public/logo192.png`).toString('base64')
+    },
+    
     bio: String,
 });
 

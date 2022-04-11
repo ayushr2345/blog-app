@@ -3,5 +3,7 @@ export default interface IUser {
     name: string,
     email: string;
     dob: string,
-    password: string;
+    password: string,
+    bio: string,
+    profileImage: string
 }

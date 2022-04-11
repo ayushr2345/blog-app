@@ -25,11 +25,24 @@ function ProtectedProfileRoute() {
     });
   }, []);
 
+  const getUpdatedUser = () => {
+    MatchAUserSession().then((res) => {
+      if (res.user === null) {
+        setIsLoggedIn(false);
+        setLoading(false);
+      } else {
+        setIsLoggedIn(true);
+        setLoading(false);
+        setUser(res.user);
+      }
+    });
+  };
+
   if (isLoading) {
     return <>Loading...</>;
   } else {
     if (isLoggedIn) {
-      return <Outlet context={{ user }} />;
+      return <Outlet context={{ user, getUpdatedUser }} />;
     } else {
       return <Navigate to="/login" />;
     }

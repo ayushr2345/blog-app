@@ -8,9 +8,11 @@ import {
   DeleteALLBlogs,
   DeleteUser,
   GetAllBlogs,
+  UpdateProfileImage,
   UpdateUser,
 } from "../../services/userService";
 import BlogCardProfile from "./CardProfile";
+import EditIcon from "@mui/icons-material/Edit";
 import "./Profile.css";
 
 type Blog = {
@@ -19,28 +21,38 @@ type Blog = {
   title: string;
   article: string;
   datePublished: Date;
+  profileImage: string;
 };
 
 function Profile() {
   const navigate = useNavigate();
+  const [image, setImage] = useState("");
   const [user, setUser] = useState<Partial<IUser>>({
     name: "",
     email: "",
+    bio: "",
   });
   const [updatedUser, setUpdatedUser] = useState<Partial<IUser>>({
     name: "",
     email: "",
+    bio: "",
   });
 
   const [blogList, setBlogList] = useState<Blog[]>([]);
 
   const newUser = useOutletContext<{ user: Partial<IUser> }>().user;
+  const getUpdatedUser = useOutletContext<{ getUpdatedUser: () => void }>()
+    .getUpdatedUser;
+
   useEffect(() => {
     if (newUser) {
       setUser(newUser);
+      // if (newUser.profileImage) {
+      //   var x = new Buffer(newUser.profileImage.data).toString("base64");
+      //   setImage(x);
+      // }
       GetAllBlogs().then((e) => {
         setBlogList(e);
-        console.log(user, blogList);
         setUpdatedUser(newUser);
       });
     }
@@ -53,11 +65,41 @@ function Profile() {
   };
 
   const handleUpdateAccount = async () => {
-    await UpdateUser(updatedUser).then((e)=>{
-      console.log(e)
+    await UpdateUser(updatedUser).then((e) => {
+      console.log(e);
     });
+
+    getUpdatedUser();
     handleCloseAccountEdit();
-  }
+  };
+
+  const convertToBase64 = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleUpdateProfileImage = async (event: any) => {
+    event.preventDefault();
+    if (event.target.files[0]) {
+      const uploadFile = event.target.files[0];
+      const base64 = await convertToBase64(uploadFile);
+      // console.log(base64);
+
+      await UpdateProfileImage(base64).then((e) => {
+        //console.log(e);
+      });
+      getUpdatedUser();
+    }
+  };
 
   // ACCOUNT DELETE
   const [showAccountDelete, setShowAccountDelete] = useState(false);
@@ -65,7 +107,11 @@ function Profile() {
   const handleCloseAccountDelete = () => setShowAccountDelete(false);
   const handleShowAccountDelete = () => setShowAccountDelete(true);
 
-  const handleCloseAccountEdit = () => setShowAccountEdit(false);
+  const handleCloseAccountEdit = () => {
+    setShowAccountEdit(false);
+    setUpdatedUser(newUser);
+  };
+
   const handleShowAccountEdit = () => setShowAccountEdit(true);
 
   const handleAccountDelete = async () => {
@@ -79,10 +125,36 @@ function Profile() {
     <div>
       {/* PROFILE */}
       <div className="profile">
+        <div>
+          <div className="image-section">
+            {user.profileImage && (
+              <img
+                className="profile-image"
+                src={`${user.profileImage}`}
+                alt="avatar"
+                width="256"
+                height="256"
+              />
+            )}
+
+            <label htmlFor="file">
+              <input
+                type="file"
+                className="hidden-form-image"
+                id="file"
+                onChange={handleUpdateProfileImage}
+              />
+
+              <EditIcon className="edit-profile-image" />
+            </label>
+          </div>
+          {/* </EditIcon> */}
+        </div>
         <div className="user-name">{updatedUser.name}</div>
         <br />
         <div className="user-email">
           {updatedUser.email} <br />
+          <div className="user-bio">{user.bio}</div>
           <LinkContainer className="goto-dashboard" to="/auth/dashboard">
             <a>Go to Dashboard</a>
           </LinkContainer>
@@ -103,17 +175,16 @@ function Profile() {
             <Modal.Title>Updating Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <Alert variant="warning">
+              You cannot update NAME, EMAIL or DOB once it is set!
+            </Alert>
             <Form>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={user.name}
-                  disabled={true}
-                />
+                <Form.Control type="text" value={user.name} disabled={true} />
               </Form.Group>
 
               <Form.Group
@@ -121,10 +192,26 @@ function Profile() {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Email</Form.Label>
+                <Form.Control type="text" value={user.email} disabled={true} />
+              </Form.Group>
+
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Bio</Form.Label>
                 <Form.Control
-                  type="text"
-                  value={user.email}
-                  disabled={true}
+                  as="textarea"
+                  rows={3}
+                  value={updatedUser.bio}
+                  placeholder="Write a bio"
+                  onChange={(event) => {
+                    const bio = event.currentTarget.value;
+                    setUpdatedUser({
+                      ...updatedUser,
+                      bio: bio,
+                    });
+                  }}
                 />
               </Form.Group>
 
@@ -135,7 +222,7 @@ function Profile() {
                 <Form.Label>Date Of Birth</Form.Label>
                 <Form.Control
                   type="date"
-                  value={}
+                  value={user.dob ? user.dob.slice(0, 10) : user.dob}
                   disabled={user.dob ? true : false}
                   onChange={(event) => {
                     const dob = event.currentTarget.value;
@@ -161,7 +248,7 @@ function Profile() {
         <br />
         {/* DELETE ACCOUNT SECTION */}
         <Button
-          variant="danger"
+          variant="outline-danger"
           className="delete-profile-button"
           onClick={handleShowAccountDelete}
         >

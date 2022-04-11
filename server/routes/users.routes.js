@@ -3,7 +3,30 @@ const User = require('../db/models/user.model');
 const userRouter = express.Router();
 const passportLocal = require('../auth/local');
 const { generatePassword } = require('../auth/pwUtils');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
+
+// MIDDLEWARE FOR IMAGE INPUT
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {   
+        cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+let upload = multer({ storage, fileFilter });
 
 /*
 ---------- CREATE A USER ----------
@@ -118,6 +141,29 @@ userRouter.put('/update', async (req, res) => {
             } else {
                 return res.status(200).json({
                     updatedUser: updatedUser
+                });
+            }
+        });
+    }
+});
+
+/*
+---------- UPDATE PROFILE IMAGE ----------
+*/
+userRouter.post('/update-profile-image', async (req, res) => {
+    // const user = req.body.data.user;
+    // const image = req.body.data.image;
+    // console.log(req.body)
+    // req.user.profileImage = req.body;
+
+    // console.log(req.body.image)
+    if (req.body) {
+        User.findOneAndUpdate({_id: req.user._id}, {$set: {profileImage: req.body.image}}, {new: true}, (err, newUser) => {
+            if (err) {
+                console.log("")
+            } else {
+                return res.status(200).json({
+                    message: "success"
                 });
             }
         });

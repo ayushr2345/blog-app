@@ -6,6 +6,7 @@ import { AddBlog, GetAllBlogs, logOutUser } from "../../services/userService";
 import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import IUser from "../../interfaces/User.interface";
 import BlogCardLatest from "./CardLatest";
+import AddIcon from "@mui/icons-material/Add";
 import { LinkContainer } from "react-router-bootstrap";
 
 type Blog = {
@@ -73,8 +74,9 @@ function Dashboard() {
   let i = 0;
   return (
     <div className="blogs">
+      <AddIcon fontSize="large" className="add-icon" />
       {/* Create a Blog */}
-      <Form className="form">
+      <Form id="create-blog">
         <Form.Label className="heading">Post a new Article</Form.Label>
         <Form.Group className="mb-3" controlId="title">
           <Form.Control
@@ -138,6 +140,7 @@ function Dashboard() {
           </Button>
         </div>
       </Form>
+
       {blogList.length == 0 ? (
         <></>
       ) : (
@@ -152,11 +155,25 @@ function Dashboard() {
       </div>
 
       {/* PROFILE */}
+
       <div className="user">
+        <div className="image-section">
+          {user.profileImage && (
+            <img
+              className="profile-image"
+              src={`${user.profileImage}`}
+              alt="avatar"
+              width="256"
+              height="256"
+            />
+          )}
+        </div>
         <div className="user-name">{user.name}</div>
         <br />
         <div className="user-email">
-          {user.email} <br />
+          {user.email}
+          <br />
+          <div className="user-bio">{user.bio}</div>
           <LinkContainer className="goto-profile" to="/auth/profile">
             <a>Go to Profile</a>
           </LinkContainer>

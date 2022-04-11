@@ -18,6 +18,7 @@ import Blog from "./components/Authorized/Blog";
 import ProtectedBlogRoute from "./components/Authorized/ProtectedBlogRoute";
 import Profile from "./components/Authorized/Profile";
 import ProtectedProfileRoute from "./components/Authorized/ProtectedProfileRoute";
+import ProtectedHomeRoute from "./components/Authorized/ProtectedHomeRoute";
 
 function App() {
   const [user, setUser] = useState<Partial<IUser>>({
@@ -30,7 +31,10 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route index element={<Home />} />
+        {/* Protected Route for Home */}
+        <Route path="/" element={<ProtectedHomeRoute />}>
+          <Route path="" element={<Home />} />
+        </Route>
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
 

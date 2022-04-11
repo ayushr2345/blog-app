@@ -99,6 +99,22 @@ export const UpdateUser = async (user: Partial<IUser>) => {
   }
 };
 
+// UPDATE PROFILE IMAGE
+export const UpdateProfileImage = async (image: unknown) => {
+  try {
+    // console.log(form.get("file"));
+    const response = await axios.post(
+      USERS_API_URL + "/auth/update-profile-image",
+      { image: image }
+    );
+    //console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(USERS_API_URL);
+    console.log(err);
+  }
+};
+
 // DELETE A USER
 export const DeleteUser = async (user: Partial<IUser>) => {
   try {

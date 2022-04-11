@@ -17,21 +17,19 @@ const BlogCardLatest: FC<Props> = ({ blog }) => {
   });
 
   return (
-    <Card className="blog-card-latest">
-      <Card.Body>
-        <LinkContainer to={"/auth/blog/" + blog._id}>
-          <a>
-            <Card.Title className="latest">{blog.title}</Card.Title>
-          </a>
-        </LinkContainer>
-        <Card.Subtitle className="mb-2 text-muted latest">
-          {userName}
-        </Card.Subtitle>
-        <Card.Subtitle className="mb-2 text-muted card-date latest">
-          {blog.datePublished.toString().slice(0, 10)}
-        </Card.Subtitle>
-      </Card.Body>
-    </Card>
+    <a href={"/auth/blog/" + blog._id}>
+      <Card className="blog-card-latest">
+        <Card.Body>
+          <Card.Title className="latest">{blog.title}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted latest">
+            {userName}
+          </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted card-date latest">
+            {blog.datePublished.toString().slice(0, 10)}
+          </Card.Subtitle>
+        </Card.Body>
+      </Card>
+    </a>
   );
 };
 
