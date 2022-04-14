@@ -6,7 +6,7 @@ This repo consists of the frontend and the backend of the web app created by me 
  - The app also gives an option to add any bio, update DOB, view other users' bio, blogs
  - The app also supports adding a profile picture to your account which is visible to all the users
 
-## Frontend
+## Frontend - Tweeter
 
 The frontend uses ReactJS with bootstrap and MUI icons in it. The frontend allows users to perform CRUD (create, read, update and delete) operations on their blogs and their account. The app asks for an email which would be unique and the name, password for authentication. The front end is responsive to laptops and mobile screens
 
